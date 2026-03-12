@@ -1,0 +1,8 @@
+{
+  "app_name": "AgriPulse",
+  "select_crop": "Select Crop",
+  "select_state": "Select State",
+  "select_district": "Select District",
+  "compare_markets": "Compare Markets",
+  "forecast": "Price Forecast"
+}
