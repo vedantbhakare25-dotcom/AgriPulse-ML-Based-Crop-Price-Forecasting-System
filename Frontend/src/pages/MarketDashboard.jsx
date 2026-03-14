@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import Navbar from "../components/layout/Navbar"
 
 import CropSelector from "../components/agri/CropSelector"
@@ -8,6 +9,34 @@ import InsightPanel from "../components/agri/InsightPanel"
 
 function MarketDashboard(){
 
+  const [selection, setSelection] = useState({ state: '', district: '', crop: '' });
+  const [marketData, setMarketData] = useState([]);
+  const [loadingMarkets, setLoadingMarkets] = useState(false);
+
+  const handleSelectionChange = (newSelection) => {
+    setSelection(newSelection);
+  };
+
+  useEffect(() => {
+    if (selection.state && selection.district && selection.crop) {
+      setLoadingMarkets(true);
+      fetch(`http://localhost:5000/api/markets?state=${encodeURIComponent(selection.state)}&district=${encodeURIComponent(selection.district)}&crop=${encodeURIComponent(selection.crop)}`)
+        .then(res => res.json())
+        .then(data => {
+          setMarketData(data);
+          setLoadingMarkets(false);
+        })
+        .catch(err => {
+          console.error('Error fetching market data:', err);
+          setMarketData([]);
+          setLoadingMarkets(false);
+        });
+    } else {
+      setMarketData([]);
+      setLoadingMarkets(false);
+    }
+  }, [selection]);
+
 return(
 
 <div className="bg-gray-100 min-h-screen">
@@ -17,7 +46,7 @@ return(
   <div className="max-w-7xl mx-auto p-8 space-y-8">
 
       {/* Crop selection */}
-      <CropSelector />
+      <CropSelector onSelectionChange={handleSelectionChange} />
 
       {/* Market Summary */}
       <h3 className="text-lg font-semibold text-gray-700">Market Summary</h3>
@@ -30,11 +59,8 @@ return(
       {/* Nearby Market Prices */}
       <h3 className="text-lg font-semibold text-gray-700">Nearby Market Prices</h3>
       <MandiTable
-        data={[
-          { mandi: "Lasalgaon", price: 2100, arrival: 520, distance: 18 },
-          { mandi: "Pune", price: 1980, arrival: 300, distance: 65 },
-          { mandi: "Ahmednagar", price: 2050, arrival: 410, distance: 72 },
-        ]}
+        data={marketData}
+        loading={loadingMarkets}
       />
 
       {/* Price Trend */}

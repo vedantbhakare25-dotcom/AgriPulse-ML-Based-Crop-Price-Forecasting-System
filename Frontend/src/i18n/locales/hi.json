@@ -4,5 +4,28 @@
   "select_state": "राज्य चुनें",
   "select_district": "जिला चुनें",
   "compare_markets": "मंडी तुलना",
-  "forecast": "मूल्य पूर्वानुमान"
+  "forecast": "मूल्य पूर्वानुमान",
+  "nav": {
+    "home": "होम",
+    "markets": "मंडी",
+    "forecast": "पूर्वानुमान",
+    "crops": "फसलें"
+  },
+  "crop_selector": {
+    "title": "फसल चुनें",
+    "state": "राज्य",
+    "district": "जिला",
+    "crop": "फसल",
+    "loading_states": "राज्य लोड हो रहे हैं...",
+    "loading_districts": "जिला लोड हो रहे हैं...",
+    "loading_crops": "फसलें लोड हो रही हैं..."
+  },
+  "mandi_table": {
+    "mandi": "मंडी का नाम",
+    "price": "मूल्य (₹/क्विंटल)",
+    "arrival": "आगमन (टन)",
+    "distance": "दूरी (किमी)",
+    "loading": "मंडी डेटा लोड हो रहा है...",
+    "empty": "कोई मंडी डेटा उपलब्ध नहीं"
+  }
 }

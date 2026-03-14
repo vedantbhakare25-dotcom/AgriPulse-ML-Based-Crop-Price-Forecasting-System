@@ -4,5 +4,28 @@
   "select_state": "राज्य निवडा",
   "select_district": "जिल्हा निवडा",
   "compare_markets": "मंडी तुलना",
-  "forecast": "किंमत अंदाज"
+  "forecast": "किंमत अंदाज",
+  "nav": {
+    "home": "होम",
+    "markets": "मंडी",
+    "forecast": "अंदाज",
+    "crops": "पिके"
+  },
+  "crop_selector": {
+    "title": "पिक निवडा",
+    "state": "राज्य",
+    "district": "जिल्हा",
+    "crop": "पिक",
+    "loading_states": "राज्य लोड होत आहेत...",
+    "loading_districts": "जिल्हे लोड होत आहेत...",
+    "loading_crops": "पिके लोड होत आहेत..."
+  },
+  "mandi_table": {
+    "mandi": "मंडीचे नाव",
+    "price": "किंमत (₹/क्विंटल)",
+    "arrival": "आगमन (टन)",
+    "distance": "अंतर (किमी)",
+    "loading": "मंडी डेटा लोड होत आहे...",
+    "empty": "कोणताही मंडी डेटा उपलब्ध नाही"
+  }
 }

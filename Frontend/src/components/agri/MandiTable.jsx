@@ -2,7 +2,6 @@ import { useTranslation } from "react-i18next";
 
 function MandiTable({ data = [], loading = false }) {
   const { t } = useTranslation();
-
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full divide-y divide-gray-200">

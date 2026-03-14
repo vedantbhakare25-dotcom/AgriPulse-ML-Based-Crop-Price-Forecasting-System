@@ -4,5 +4,28 @@
   "select_state": "Select State",
   "select_district": "Select District",
   "compare_markets": "Compare Markets",
-  "forecast": "Price Forecast"
+  "forecast": "Price Forecast",
+  "nav": {
+    "home": "Home",
+    "markets": "Markets",
+    "forecast": "Forecast",
+    "crops": "Crops"
+  },
+  "crop_selector": {
+    "title": "Select Crop",
+    "state": "State",
+    "district": "District",
+    "crop": "Crop",
+    "loading_states": "Loading states...",
+    "loading_districts": "Loading districts...",
+    "loading_crops": "Loading crops..."
+  },
+  "mandi_table": {
+    "mandi": "Mandi Name",
+    "price": "Price (₹/quintal)",
+    "arrival": "Arrival (tons)",
+    "distance": "Distance (km)",
+    "loading": "Loading market data...",
+    "empty": "No market data available"
+  }
 }
