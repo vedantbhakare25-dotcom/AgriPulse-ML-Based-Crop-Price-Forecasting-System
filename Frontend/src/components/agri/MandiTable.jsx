@@ -2,70 +2,97 @@ import { useTranslation } from "react-i18next";
 
 function MandiTable({ data = [], loading = false }) {
   const { t } = useTranslation();
+
+  const bestPrice =
+    data.length > 0 ? Math.max(...data.map((row) => row.price)) : null;
+
   return (
     <div className="overflow-x-auto">
-      <table className="min-w-full divide-y divide-gray-200">
-        <thead className="bg-gray-100">
-          <tr>
-            <th
-              scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
+      <table className="min-w-full">
+        <thead>
+          <tr className="border-b border-gray-200 bg-gray-50">
+            <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
+              #
+            </th>
+            <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
               {t("mandi_table.mandi")}
             </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
+            <th className="px-6 py-4 text-right text-xs font-semibold uppercase tracking-wider text-gray-500">
               {t("mandi_table.price")}
             </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
+            <th className="px-6 py-4 text-right text-xs font-semibold uppercase tracking-wider text-gray-500">
               {t("mandi_table.arrival")}
             </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
+            <th className="px-6 py-4 text-right text-xs font-semibold uppercase tracking-wider text-gray-500">
               {t("mandi_table.distance")}
             </th>
           </tr>
         </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
+
+        <tbody className="divide-y divide-gray-100 bg-white">
           {loading ? (
             <tr>
-              <td colSpan={4} className="px-6 py-4 text-center text-gray-500">
+              <td colSpan={5} className="px-6 py-8 text-center text-sm text-gray-500">
                 {t("mandi_table.loading")}
               </td>
             </tr>
           ) : data.length === 0 ? (
             <tr>
-              <td colSpan={4} className="px-6 py-4 text-center text-gray-500">
+              <td colSpan={5} className="px-6 py-8 text-center text-sm text-gray-500">
                 {t("mandi_table.empty")}
               </td>
             </tr>
           ) : (
-            data.map((row) => (
-              <tr
-                key={row.mandi}
-                className="hover:bg-gray-50 transition-colors duration-150"
-              >
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                  {row.mandi}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-right">
-                  {new Intl.NumberFormat("en-IN").format(row.price)}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-right">
-                  {row.arrival}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-right">
-                  {row.distance}
-                </td>
-              </tr>
-            ))
+            data.map((row, index) => {
+              const isBestPrice = row.price === bestPrice;
+
+              return (
+                <tr
+                  key={row.mandi}
+                  className="transition hover:bg-gray-50"
+                >
+                  <td className="px-6 py-4 text-sm font-medium text-gray-500">
+                    {index + 1}
+                  </td>
+
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="flex items-center gap-3">
+                      <div className="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center text-sm font-semibold text-green-700">
+                        {row.mandi.charAt(0)}
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-gray-900">
+                          {row.mandi}
+                        </p>
+                        {isBestPrice && (
+                          <span className="inline-block mt-1 rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700">
+                            Best Price
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </td>
+
+                  <td className="px-6 py-4 whitespace-nowrap text-right">
+                    <span
+                      className={`text-sm font-bold ${
+                        isBestPrice ? "text-green-700" : "text-gray-900"
+                      }`}
+                    >
+                      ₹{row.price}
+                    </span>
+                  </td>
+
+                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-700">
+                    {row.arrival}
+                  </td>
+
+                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-700">
+                    {row.distance} km
+                  </td>
+                </tr>
+              );
+            })
           )}
         </tbody>
       </table>

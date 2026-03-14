@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import Navbar from "../components/layout/Navbar"
 
 import CropSelector from "../components/agri/CropSelector"
@@ -9,67 +8,58 @@ import InsightPanel from "../components/agri/InsightPanel"
 
 function MarketDashboard(){
 
-  const [selection, setSelection] = useState({ state: '', district: '', crop: '' });
-  const [marketData, setMarketData] = useState([]);
-  const [loadingMarkets, setLoadingMarkets] = useState(false);
-
-  const handleSelectionChange = (newSelection) => {
-    setSelection(newSelection);
-  };
-
-  useEffect(() => {
-    if (selection.state && selection.district && selection.crop) {
-      setLoadingMarkets(true);
-      fetch(`http://localhost:5000/api/markets?state=${encodeURIComponent(selection.state)}&district=${encodeURIComponent(selection.district)}&crop=${encodeURIComponent(selection.crop)}`)
-        .then(res => res.json())
-        .then(data => {
-          setMarketData(data);
-          setLoadingMarkets(false);
-        })
-        .catch(err => {
-          console.error('Error fetching market data:', err);
-          setMarketData([]);
-          setLoadingMarkets(false);
-        });
-    } else {
-      setMarketData([]);
-      setLoadingMarkets(false);
-    }
-  }, [selection]);
+  const staticMarketData = [
+    { mandi: "Lasalgaon", price: 2100, arrival: 520, distance: 18 },
+    { mandi: "Pimpalgaon", price: 2050, arrival: 430, distance: 24 },
+    { mandi: "Nashik City", price: 1980, arrival: 300, distance: 12 }
+  ];
 
 return(
 
-<div className="bg-gray-100 min-h-screen">
+<div className="bg-gray-50 min-h-screen">
 
   <Navbar />
 
-  <div className="max-w-7xl mx-auto p-8 space-y-8">
+  <div className="max-w-7xl mx-auto px-4 py-10 space-y-10">
 
       {/* Crop selection */}
-      <CropSelector onSelectionChange={handleSelectionChange} />
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <CropSelector />
+      </div>
 
       {/* Market Summary */}
-      <h3 className="text-lg font-semibold text-gray-700">Market Summary</h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        <ForecastCard title="Best Market Price" value="2100" />
-        <ForecastCard title="Average Price" value="1870" />
-        <ForecastCard title="7 Day Forecast" value="1950" />
+      <div>
+        <h2 className="text-xl font-semibold text-gray-800 mb-6">Market Summary</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <ForecastCard title="Best Market Price" value="2100" />
+          <ForecastCard title="Average Price" value="1870" />
+          <ForecastCard title="7 Day Forecast" value="1950" />
+        </div>
       </div>
 
       {/* Nearby Market Prices */}
-      <h3 className="text-lg font-semibold text-gray-700">Nearby Market Prices</h3>
-      <MandiTable
-        data={marketData}
-        loading={loadingMarkets}
-      />
+      <div>
+        <h2 className="text-xl font-semibold text-gray-800 mb-6">Nearby Market Prices</h2>
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+          <MandiTable data={staticMarketData} />
+        </div>
+      </div>
 
       {/* Price Trend */}
-      <h3 className="text-lg font-semibold text-gray-700">Price Trend</h3>
-      <PriceChart />
+      <div>
+        <h2 className="text-xl font-semibold text-gray-800 mb-6">Price Trend</h2>
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+          <PriceChart />
+        </div>
+      </div>
 
       {/* AI Insights */}
-      <h3 className="text-lg font-semibold text-gray-700">AI Insights</h3>
-      <InsightPanel />
+      <div>
+        <h2 className="text-xl font-semibold text-gray-800 mb-6">AI Insights</h2>
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+          <InsightPanel />
+        </div>
+      </div>
 
     </div>
 
