@@ -12,7 +12,7 @@ const STATES = ["Maharashtra", "Punjab", "Karnataka"];
 const DISTRICTS_BY_STATE = {
   Maharashtra: ["Nashik", "Pune", "Nagpur"],
   Punjab: ["Ludhiana", "Amritsar"],
-  Karnataka: ["Bengaluru Rural", "Mysuru"]
+  Karnataka: ["Bengaluru Rural", "Mysuru"],
 };
 
 const CROPS_BY_DISTRICT = {
@@ -22,26 +22,47 @@ const CROPS_BY_DISTRICT = {
   Ludhiana: ["Wheat", "Rice"],
   Amritsar: ["Maize", "Rice"],
   "Bengaluru Rural": ["Ragi", "Tomato"],
-  Mysuru: ["Coffee", "Arecanut"]
+  Mysuru: ["Coffee", "Arecanut"],
 };
 
-const MARKETS_BY_DISTRICT = {
-  Nashik: [
-    { mandi: "Lasalgaon", price: 2100, arrival: 520, distance: 18 },
-    { mandi: "Pimpalgaon", price: 2050, arrival: 430, distance: 24 },
-    { mandi: "Nashik City", price: 1980, arrival: 300, distance: 12 }
-  ],
-  Ludhiana: [
-    { mandi: "Ludhiana Mandi", price: 2300, arrival: 600, distance: 10 },
-    { mandi: "Khanna", price: 2250, arrival: 540, distance: 28 },
-    { mandi: "Samrala", price: 2200, arrival: 400, distance: 22 }
-  ],
-  Mysuru: [
-    { mandi: "Mysuru APMC", price: 2500, arrival: 310, distance: 8 },
-    { mandi: "Nanjangud", price: 2450, arrival: 280, distance: 20 },
-    { mandi: "Mandya", price: 2400, arrival: 350, distance: 45 }
-  ]
-};
+const MARKET_RECORDS = [
+  {
+    state: "Maharashtra",
+    district: "Nashik",
+    crop: "Onion",
+    mandi: "Lasalgaon",
+    price: 2100,
+    arrival: 520,
+    distance: 18,
+  },
+  {
+    state: "Maharashtra",
+    district: "Nashik",
+    crop: "Grapes",
+    mandi: "Pimpalgaon",
+    price: 3200,
+    arrival: 280,
+    distance: 24,
+  },
+  {
+    state: "Punjab",
+    district: "Ludhiana",
+    crop: "Wheat",
+    mandi: "Ludhiana Mandi",
+    price: 2300,
+    arrival: 600,
+    distance: 10,
+  },
+  {
+    state: "Karnataka",
+    district: "Mysuru",
+    crop: "Arecanut",
+    mandi: "Mysuru APMC",
+    price: 2500,
+    arrival: 310,
+    distance: 8,
+  },
+];
 
 app.get("/api/states", (req, res) => {
   res.json(STATES);
@@ -62,8 +83,19 @@ app.get("/api/crops", (req, res) => {
 app.get("/api/markets", (req, res) => {
   const { state, district, crop } = req.query;
   console.log("Markets route hit:", { state, district, crop });
-  const markets = MARKETS_BY_DISTRICT[district] || [];
-  res.json(markets);
+  const filtered = MARKET_RECORDS.filter(
+    (record) =>
+      record.state === state &&
+      record.district === district &&
+      record.crop === crop,
+  );
+  const result = filtered.map(({ mandi, price, arrival, distance }) => ({
+    mandi,
+    price,
+    arrival,
+    distance,
+  }));
+  res.json(result);
 });
 
 console.log("Loaded correct Backend/server.js");
