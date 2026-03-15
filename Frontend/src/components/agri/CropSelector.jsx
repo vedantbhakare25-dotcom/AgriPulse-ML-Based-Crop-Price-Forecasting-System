@@ -1,49 +1,169 @@
-import { useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { LocationContext } from "../../context/LocationContext";
+import {
+  fetchStates,
+  fetchDistricts,
+  fetchTalukas,
+  fetchMarkets,
+  fetchCommodities,
+} from "../../services/api";
 
 function CropSelector() {
   const { t } = useTranslation();
   const locationContext = useContext(LocationContext);
 
+  const [states, setStates] = useState([]);
+  const [districts, setDistricts] = useState([]);
+  const [talukas, setTalukas] = useState([]);
+  const [markets, setMarkets] = useState([]);
+  const [commodities, setCommodities] = useState([]);
+
   const [selectedState, setSelectedState] = useState("");
   const [selectedDistrict, setSelectedDistrict] = useState("");
-  const [selectedCrop, setSelectedCrop] = useState("");
+  const [selectedTaluka, setSelectedTaluka] = useState("");
+  const [selectedMarket, setSelectedMarket] = useState("");
+  const [selectedCommodity, setSelectedCommodity] = useState("");
+
+  const [loadingStates, setLoadingStates] = useState(false);
+  const [loadingDistricts, setLoadingDistricts] = useState(false);
+  const [loadingTalukas, setLoadingTalukas] = useState(false);
+  const [loadingMarkets, setLoadingMarkets] = useState(false);
+  const [loadingCommodities, setLoadingCommodities] = useState(false);
 
   const setGlobalState = locationContext?.setState;
   const setGlobalDistrict = locationContext?.setDistrict;
+  const setGlobalTaluka = locationContext?.setTaluka;
+  const setGlobalMarket = locationContext?.setMarket;
   const setGlobalCrop = locationContext?.setCrop;
 
-  const states = ["Maharashtra", "Punjab", "Karnataka"];
+  useEffect(() => {
+    const loadStates = async () => {
+      try {
+        setLoadingStates(true);
+        const data = await fetchStates();
+        setStates(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.error("Failed to load states:", error);
+        setStates([]);
+      } finally {
+        setLoadingStates(false);
+      }
+    };
 
-  const districtsByState = {
-    Maharashtra: ["Nashik", "Pune", "Nagpur"],
-    Punjab: ["Ludhiana", "Amritsar"],
-    Karnataka: ["Bengaluru Rural", "Mysuru"],
-  };
+    loadStates();
+  }, []);
 
-  const cropsByDistrict = {
-    Nashik: ["Onion", "Grapes", "Tomato"],
-    Pune: ["Sugarcane", "Wheat"],
-    Nagpur: ["Orange", "Cotton"],
-    Ludhiana: ["Wheat", "Rice"],
-    Amritsar: ["Maize", "Rice"],
-    "Bengaluru Rural": ["Ragi", "Tomato"],
-    Mysuru: ["Coffee", "Arecanut"],
-  };
+  useEffect(() => {
+    const loadDistricts = async () => {
+      if (!selectedState) {
+        setDistricts([]);
+        return;
+      }
 
-  const districts = selectedState ? districtsByState[selectedState] || [] : [];
-  const crops = selectedDistrict ? cropsByDistrict[selectedDistrict] || [] : [];
+      try {
+        setLoadingDistricts(true);
+        const data = await fetchDistricts(selectedState);
+        setDistricts(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.error("Failed to load districts:", error);
+        setDistricts([]);
+      } finally {
+        setLoadingDistricts(false);
+      }
+    };
+
+    loadDistricts();
+  }, [selectedState]);
+
+  useEffect(() => {
+    const loadTalukas = async () => {
+      if (!selectedState || !selectedDistrict) {
+        setTalukas([]);
+        return;
+      }
+
+      try {
+        setLoadingTalukas(true);
+        const data = await fetchTalukas(selectedDistrict, selectedState);
+        setTalukas(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.error("Failed to load talukas:", error);
+        setTalukas([]);
+      } finally {
+        setLoadingTalukas(false);
+      }
+    };
+
+    loadTalukas();
+  }, [selectedDistrict, selectedState]);
+
+  useEffect(() => {
+    const loadMarkets = async () => {
+      if (!selectedState || !selectedDistrict || !selectedTaluka) {
+        setMarkets([]);
+        return;
+      }
+
+      try {
+        setLoadingMarkets(true);
+        const data = await fetchMarkets(
+          selectedDistrict,
+          selectedTaluka,
+          selectedState,
+        );
+        setMarkets(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.error("Failed to load markets:", error);
+        setMarkets([]);
+      } finally {
+        setLoadingMarkets(false);
+      }
+    };
+
+    loadMarkets();
+  }, [selectedDistrict, selectedTaluka, selectedState]);
+
+  useEffect(() => {
+    const loadCommodities = async () => {
+      if (!selectedMarket) {
+        setCommodities([]);
+        return;
+      }
+
+      try {
+        setLoadingCommodities(true);
+        const data = await fetchCommodities(selectedMarket);
+        setCommodities(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.error("Failed to load commodities:", error);
+        setCommodities([]);
+      } finally {
+        setLoadingCommodities(false);
+      }
+    };
+
+    loadCommodities();
+  }, [selectedMarket]);
 
   const handleStateChange = (e) => {
     const value = e.target.value;
 
     setSelectedState(value);
     setSelectedDistrict("");
-    setSelectedCrop("");
+    setSelectedTaluka("");
+    setSelectedMarket("");
+    setSelectedCommodity("");
+
+    setDistricts([]);
+    setTalukas([]);
+    setMarkets([]);
+    setCommodities([]);
 
     setGlobalState?.(value);
     setGlobalDistrict?.("");
+    setGlobalTaluka?.("");
+    setGlobalMarket?.("");
     setGlobalCrop?.("");
   };
 
@@ -51,16 +171,50 @@ function CropSelector() {
     const value = e.target.value;
 
     setSelectedDistrict(value);
-    setSelectedCrop("");
+    setSelectedTaluka("");
+    setSelectedMarket("");
+    setSelectedCommodity("");
+
+    setTalukas([]);
+    setMarkets([]);
+    setCommodities([]);
 
     setGlobalDistrict?.(value);
+    setGlobalTaluka?.("");
+    setGlobalMarket?.("");
     setGlobalCrop?.("");
   };
 
-  const handleCropChange = (e) => {
+  const handleTalukaChange = (e) => {
     const value = e.target.value;
 
-    setSelectedCrop(value);
+    setSelectedTaluka(value);
+    setSelectedMarket("");
+    setSelectedCommodity("");
+
+    setMarkets([]);
+    setCommodities([]);
+
+    setGlobalTaluka?.(value);
+    setGlobalMarket?.("");
+    setGlobalCrop?.("");
+  };
+
+  const handleMarketChange = (e) => {
+    const value = e.target.value;
+
+    setSelectedMarket(value);
+    setSelectedCommodity("");
+
+    setCommodities([]);
+
+    setGlobalMarket?.(value);
+    setGlobalCrop?.("");
+  };
+  const handleCommodityChange = (e) => {
+    const value = e.target.value;
+
+    setSelectedCommodity(value);
     setGlobalCrop?.(value);
   };
 
@@ -75,7 +229,7 @@ function CropSelector() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-5">
         <div>
           <label className="mb-2 block text-sm font-medium text-gray-700">
             {t("crop_selector.state")}
@@ -85,10 +239,14 @@ function CropSelector() {
             onChange={handleStateChange}
             className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-800 shadow-sm outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-100"
           >
-            <option value="">{t("crop_selector.state_placeholder")}</option>
+            <option value="">
+              {loadingStates
+                ? t("crop_selector.loading_states")
+                : t("crop_selector.state_placeholder")}
+            </option>
             {states.map((state) => (
-              <option key={state} value={state}>
-                {state}
+              <option key={state._id} value={state.code}>
+                {state.name}
               </option>
             ))}
           </select>
@@ -101,13 +259,71 @@ function CropSelector() {
           <select
             value={selectedDistrict}
             onChange={handleDistrictChange}
-            disabled={!selectedState}
+            disabled={!selectedState || loadingDistricts}
             className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-800 shadow-sm outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-100 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-400"
           >
-            <option value="">{t("crop_selector.district_placeholder")}</option>
+            <option value="">
+              {loadingDistricts
+                ? t("crop_selector.loading_districts")
+                : t("crop_selector.district_placeholder")}
+            </option>
             {districts.map((district) => (
-              <option key={district} value={district}>
-                {district}
+              <option key={district._id} value={district.name}>
+                {district.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label className="mb-2 block text-sm font-medium text-gray-700">
+            {t("crop_selector.taluka", { defaultValue: "Taluka" })}
+          </label>
+          <select
+            value={selectedTaluka}
+            onChange={handleTalukaChange}
+            disabled={!selectedDistrict || loadingTalukas}
+            className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-800 shadow-sm outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-100 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-400"
+          >
+            <option value="">
+              {loadingTalukas
+                ? t("crop_selector.loading_talukas", {
+                    defaultValue: "Loading talukas...",
+                  })
+                : t("crop_selector.taluka_placeholder", {
+                    defaultValue: "Select taluka",
+                  })}
+            </option>
+            {talukas.map((taluka) => (
+              <option key={taluka._id} value={taluka.name}>
+                {taluka.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label className="mb-2 block text-sm font-medium text-gray-700">
+            {t("crop_selector.market", { defaultValue: "Market" })}
+          </label>
+          <select
+            value={selectedMarket}
+            onChange={handleMarketChange}
+            disabled={!selectedTaluka || loadingMarkets}
+            className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-800 shadow-sm outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-100 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-400"
+          >
+            <option value="">
+              {loadingMarkets
+                ? t("crop_selector.loading_markets", {
+                    defaultValue: "Loading markets...",
+                  })
+                : t("crop_selector.market_placeholder", {
+                    defaultValue: "Select market",
+                  })}
+            </option>
+            {markets.map((market) => (
+              <option key={market._id} value={market.name}>
+                {market.name}
               </option>
             ))}
           </select>
@@ -118,15 +334,19 @@ function CropSelector() {
             {t("crop_selector.crop")}
           </label>
           <select
-            value={selectedCrop}
-            onChange={handleCropChange}
-            disabled={!selectedDistrict}
+            value={selectedCommodity}
+            onChange={handleCommodityChange}
+            disabled={!selectedMarket || loadingCommodities}
             className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-800 shadow-sm outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-100 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-400"
           >
-            <option value="">{t("crop_selector.crop_placeholder")}</option>
-            {crops.map((crop) => (
-              <option key={crop} value={crop}>
-                {crop}
+            <option value="">
+              {loadingCommodities
+                ? t("crop_selector.loading_crops")
+                : t("crop_selector.crop_placeholder")}
+            </option>
+            {commodities.map((commodity) => (
+              <option key={commodity._id} value={commodity.commodityName}>
+                {commodity.commodityName}
               </option>
             ))}
           </select>

@@ -19,17 +19,13 @@
     "crops": "पिके"
   },
   "crop_selector": {
-    "title": "पिक निवडा",
-    "description": "बाजारातील ट्रेंडचे विश्लेषण करण्यासाठी आपले राज्य, जिल्हा आणि पिक निवडा.",
-    "state": "राज्य",
-    "district": "जिल्हा",
-    "crop": "पिक",
-    "state_placeholder": "राज्य निवडा",
-    "district_placeholder": "जिल्हा निवडा",
-    "crop_placeholder": "पिक निवडा",
-    "loading_states": "राज्ये लोड होत आहेत...",
-    "loading_districts": "जिल्हे लोड होत आहेत...",
-    "loading_crops": "पिके लोड होत आहेत..."
+    "taluka": "तालुका",
+    "taluka_placeholder": "तालुका निवडा",
+    "loading_talukas": "तालुके लोड होत आहेत...",
+
+    "market": "बाजार",
+    "market_placeholder": "बाजार निवडा",
+    "loading_markets": "बाजार लोड होत आहेत..."
   },
   "mandi_table": {
     "mandi": "मंडीचे नाव",
@@ -43,7 +39,15 @@
   "price_chart": {
     "predicted_price": "अंदाजित किंमत",
     "price_label": "किंमत",
-    "day_labels": ["दिवस 1", "दिवस 2", "दिवस 3", "दिवस 4", "दिवस 5", "दिवस 6", "दिवस 7"]
+    "day_labels": [
+      "दिवस 1",
+      "दिवस 2",
+      "दिवस 3",
+      "दिवस 4",
+      "दिवस 5",
+      "दिवस 6",
+      "दिवस 7"
+    ]
   },
   "insight_panel": {
     "title": "एआय बाजार अंतर्दृष्टी",

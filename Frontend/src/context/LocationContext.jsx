@@ -5,6 +5,8 @@ export const LocationContext = createContext(null);
 export function LocationProvider({ children }) {
   const [state, setState] = useState("");
   const [district, setDistrict] = useState("");
+  const [taluka, setTaluka] = useState("");
+  const [market, setMarket] = useState("");
   const [crop, setCrop] = useState("");
 
   return (
@@ -14,6 +16,10 @@ export function LocationProvider({ children }) {
         setState,
         district,
         setDistrict,
+        taluka,
+        setTaluka,
+        market,
+        setMarket,
         crop,
         setCrop,
       }}

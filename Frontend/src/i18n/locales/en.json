@@ -20,13 +20,25 @@
   },
   "crop_selector": {
     "title": "Select Crop",
-    "description": "Select your state, district, and crop to analyze market trends.",
+    "description": "Choose location and crop to view market prices",
+
     "state": "State",
-    "district": "District",
-    "crop": "Crop",
     "state_placeholder": "Select state",
+
+    "district": "District",
     "district_placeholder": "Select district",
+
+    "taluka": "Taluka",
+    "taluka_placeholder": "Select taluka",
+    "loading_talukas": "Loading talukas...",
+
+    "market": "Market",
+    "market_placeholder": "Select market",
+    "loading_markets": "Loading markets...",
+
+    "crop": "Crop",
     "crop_placeholder": "Select crop",
+
     "loading_states": "Loading states...",
     "loading_districts": "Loading districts...",
     "loading_crops": "Loading crops..."
@@ -43,7 +55,15 @@
   "price_chart": {
     "predicted_price": "Predicted Price",
     "price_label": "Price",
-    "day_labels": ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5", "Day 6", "Day 7"]
+    "day_labels": [
+      "Day 1",
+      "Day 2",
+      "Day 3",
+      "Day 4",
+      "Day 5",
+      "Day 6",
+      "Day 7"
+    ]
   },
   "insight_panel": {
     "title": "AI Market Insight",

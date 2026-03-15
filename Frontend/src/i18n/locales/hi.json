@@ -19,17 +19,13 @@
     "crops": "फसलें"
   },
   "crop_selector": {
-    "title": "फसल चुनें",
-    "description": "बाज़ार रुझानों का विश्लेषण करने के लिए अपना राज्य, जिला और फसल चुनें।",
-    "state": "राज्य",
-    "district": "जिला",
-    "crop": "फसल",
-    "state_placeholder": "राज्य चुनें",
-    "district_placeholder": "जिला चुनें",
-    "crop_placeholder": "फसल चुनें",
-    "loading_states": "राज्य लोड हो रहे हैं...",
-    "loading_districts": "जिले लोड हो रहे हैं...",
-    "loading_crops": "फसलें लोड हो रही हैं..."
+    "taluka": "तहसील",
+    "taluka_placeholder": "तहसील चुनें",
+    "loading_talukas": "तहसील लोड हो रही है...",
+
+    "market": "मंडी",
+    "market_placeholder": "मंडी चुनें",
+    "loading_markets": "मंडियाँ लोड हो रही हैं..."
   },
   "mandi_table": {
     "mandi": "मंडी का नाम",
