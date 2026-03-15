@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import Navbar from "../components/layout/Navbar";
 import CropSelector from "../components/agri/CropSelector";
@@ -8,62 +8,123 @@ import MandiTable from "../components/agri/MandiTable";
 import PriceChart from "../components/agri/PriceChart";
 import InsightPanel from "../components/agri/InsightPanel";
 
-import { LocationContext } from "../context/LocationContext";
 import { fetchPrices } from "../services/api";
 
 function MarketDashboard() {
   const { t } = useTranslation();
-  const locationContext = useContext(LocationContext);
 
-  const market = locationContext?.market;
-  const crop = locationContext?.crop;
+  const [selection, setSelection] = useState({
+    stateCode: "",
+    districtName: "",
+    talukaName: "",
+    marketName: "",
+    commodityName: "",
+  });
 
   const [marketData, setMarketData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [priceHistory, setPriceHistory] = useState([]);
+  const [loadingTable, setLoadingTable] = useState(false);
+  const [loadingChart, setLoadingChart] = useState(false);
 
   useEffect(() => {
-    const loadPrices = async () => {
-      if (!market || !crop) {
+    const loadDistrictComparison = async () => {
+      if (!selection.districtName || !selection.commodityName) {
         setMarketData([]);
         return;
       }
 
       try {
-        setLoading(true);
+        setLoadingTable(true);
 
-        const prices = await fetchPrices(market, crop);
+        const prices = await fetchPrices({
+          districtName: selection.districtName,
+          commodityName: selection.commodityName,
+        });
 
-        const formatted = prices.map((item) => ({
-          mandi: item.marketName,
-          price: item.modalPrice,
-          arrival: item.arrival,
-          distance: 0,
-        }));
+        const safePrices = Array.isArray(prices) ? prices : [];
 
-        setMarketData(formatted);
+        // Keep only latest row per market for comparison table
+        const latestByMarket = new Map();
+
+        for (const item of safePrices) {
+          const existing = latestByMarket.get(item.marketName);
+
+          if (!existing || item.priceDate > existing.priceDate) {
+            latestByMarket.set(item.marketName, item);
+          }
+        }
+
+        const formattedTableData = Array.from(latestByMarket.values()).map(
+          (item) => ({
+            mandi: item.marketName,
+            price: item.modalPrice,
+            arrival: item.arrival,
+            distance: 0,
+            priceDate: item.priceDate,
+          })
+        );
+
+        setMarketData(formattedTableData);
       } catch (error) {
-        console.error("Failed to fetch market prices:", error);
+        console.error("Failed to fetch district comparison prices:", error);
         setMarketData([]);
       } finally {
-        setLoading(false);
+        setLoadingTable(false);
       }
     };
 
-    loadPrices();
-  }, [market, crop]);
+    loadDistrictComparison();
+  }, [selection.districtName, selection.commodityName]);
 
-  const bestPrice =
-    marketData.length > 0
-      ? Math.max(...marketData.map((m) => m.price))
-      : 0;
+  useEffect(() => {
+    const loadMarketHistory = async () => {
+      if (!selection.marketName || !selection.commodityName) {
+        setPriceHistory([]);
+        return;
+      }
 
-  const avgPrice =
-    marketData.length > 0
-      ? Math.round(
-          marketData.reduce((sum, m) => sum + m.price, 0) /
-            marketData.length
-        )
-      : 0;
+      try {
+        setLoadingChart(true);
+
+        const prices = await fetchPrices({
+          marketName: selection.marketName,
+          commodityName: selection.commodityName,
+        });
+
+        const safePrices = Array.isArray(prices) ? prices : [];
+        setPriceHistory(safePrices);
+      } catch (error) {
+        console.error("Failed to fetch market history:", error);
+        setPriceHistory([]);
+      } finally {
+        setLoadingChart(false);
+      }
+    };
+
+    loadMarketHistory();
+  }, [selection.marketName, selection.commodityName]);
+
+  const summary = useMemo(() => {
+    if (marketData.length === 0) {
+      return {
+        bestPrice: 0,
+        averagePrice: 0,
+        forecastPrice: 0,
+      };
+    }
+
+    const prices = marketData.map((item) => item.price);
+    const bestPrice = Math.max(...prices);
+    const averagePrice = Math.round(
+      prices.reduce((sum, price) => sum + price, 0) / prices.length
+    );
+
+    return {
+      bestPrice,
+      averagePrice,
+      forecastPrice: averagePrice,
+    };
+  }, [marketData]);
 
   return (
     <div className="bg-gray-50 min-h-screen">
@@ -71,7 +132,7 @@ function MarketDashboard() {
 
       <div className="max-w-7xl mx-auto px-4 py-10 space-y-10">
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-          <CropSelector />
+          <CropSelector onSelectionChange={setSelection} />
         </div>
 
         <div>
@@ -82,17 +143,17 @@ function MarketDashboard() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <ForecastCard
               title={t("market_dashboard.cards.best_market_price")}
-              value={bestPrice}
+              value={summary.bestPrice}
             />
 
             <ForecastCard
               title={t("market_dashboard.cards.average_price")}
-              value={avgPrice}
+              value={summary.averagePrice}
             />
 
             <ForecastCard
               title={t("market_dashboard.cards.seven_day_forecast")}
-              value={avgPrice}
+              value={summary.forecastPrice}
             />
           </div>
         </div>
@@ -103,13 +164,7 @@ function MarketDashboard() {
           </h2>
 
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-            {loading ? (
-              <p className="text-gray-500 text-sm">
-                {t("market_dashboard.loading_prices")}
-              </p>
-            ) : (
-              <MandiTable data={marketData} />
-            )}
+            <MandiTable data={marketData} loading={loadingTable} />
           </div>
         </div>
 
@@ -119,7 +174,13 @@ function MarketDashboard() {
           </h2>
 
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-            <PriceChart />
+            {loadingChart ? (
+              <p className="text-gray-500 text-sm">
+                {t("market_dashboard.loading_prices")}
+              </p>
+            ) : (
+              <PriceChart dataPoints={priceHistory} />
+            )}
           </div>
         </div>
 

@@ -1,6 +1,5 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { LocationContext } from "../../context/LocationContext";
 import {
   fetchStates,
   fetchDistricts,
@@ -9,9 +8,8 @@ import {
   fetchCommodities,
 } from "../../services/api";
 
-function CropSelector() {
+function CropSelector({ onSelectionChange }) {
   const { t } = useTranslation();
-  const locationContext = useContext(LocationContext);
 
   const [states, setStates] = useState([]);
   const [districts, setDistricts] = useState([]);
@@ -30,12 +28,6 @@ function CropSelector() {
   const [loadingTalukas, setLoadingTalukas] = useState(false);
   const [loadingMarkets, setLoadingMarkets] = useState(false);
   const [loadingCommodities, setLoadingCommodities] = useState(false);
-
-  const setGlobalState = locationContext?.setState;
-  const setGlobalDistrict = locationContext?.setDistrict;
-  const setGlobalTaluka = locationContext?.setTaluka;
-  const setGlobalMarket = locationContext?.setMarket;
-  const setGlobalCrop = locationContext?.setCrop;
 
   useEffect(() => {
     const loadStates = async () => {
@@ -96,7 +88,7 @@ function CropSelector() {
     };
 
     loadTalukas();
-  }, [selectedDistrict, selectedState]);
+  }, [selectedState, selectedDistrict]);
 
   useEffect(() => {
     const loadMarkets = async () => {
@@ -110,7 +102,7 @@ function CropSelector() {
         const data = await fetchMarkets(
           selectedDistrict,
           selectedTaluka,
-          selectedState,
+          selectedState
         );
         setMarkets(Array.isArray(data) ? data : []);
       } catch (error) {
@@ -122,7 +114,7 @@ function CropSelector() {
     };
 
     loadMarkets();
-  }, [selectedDistrict, selectedTaluka, selectedState]);
+  }, [selectedState, selectedDistrict, selectedTaluka]);
 
   useEffect(() => {
     const loadCommodities = async () => {
@@ -146,76 +138,70 @@ function CropSelector() {
     loadCommodities();
   }, [selectedMarket]);
 
+  useEffect(() => {
+    if (!onSelectionChange) return;
+
+    const payload = {
+      stateCode: selectedState,
+      districtName: selectedDistrict,
+      talukaName: selectedTaluka,
+      marketName: selectedMarket,
+      commodityName: selectedCommodity,
+    };
+
+    console.log("Selection sent from CropSelector:", payload);
+    onSelectionChange(payload);
+  }, [
+    selectedState,
+    selectedDistrict,
+    selectedTaluka,
+    selectedMarket,
+    selectedCommodity,
+    onSelectionChange,
+  ]);
+
   const handleStateChange = (e) => {
     const value = e.target.value;
-
     setSelectedState(value);
     setSelectedDistrict("");
     setSelectedTaluka("");
     setSelectedMarket("");
     setSelectedCommodity("");
-
     setDistricts([]);
     setTalukas([]);
     setMarkets([]);
     setCommodities([]);
-
-    setGlobalState?.(value);
-    setGlobalDistrict?.("");
-    setGlobalTaluka?.("");
-    setGlobalMarket?.("");
-    setGlobalCrop?.("");
   };
 
   const handleDistrictChange = (e) => {
     const value = e.target.value;
-
     setSelectedDistrict(value);
     setSelectedTaluka("");
     setSelectedMarket("");
     setSelectedCommodity("");
-
     setTalukas([]);
     setMarkets([]);
     setCommodities([]);
-
-    setGlobalDistrict?.(value);
-    setGlobalTaluka?.("");
-    setGlobalMarket?.("");
-    setGlobalCrop?.("");
   };
 
   const handleTalukaChange = (e) => {
     const value = e.target.value;
-
     setSelectedTaluka(value);
     setSelectedMarket("");
     setSelectedCommodity("");
-
     setMarkets([]);
     setCommodities([]);
-
-    setGlobalTaluka?.(value);
-    setGlobalMarket?.("");
-    setGlobalCrop?.("");
   };
 
   const handleMarketChange = (e) => {
     const value = e.target.value;
-
     setSelectedMarket(value);
     setSelectedCommodity("");
-
     setCommodities([]);
-
-    setGlobalMarket?.(value);
-    setGlobalCrop?.("");
   };
-  const handleCommodityChange = (e) => {
-    const value = e.target.value;
 
-    setSelectedCommodity(value);
-    setGlobalCrop?.(value);
+  const handleCommodityChange = (e) => {
+    setSelectedCommodity(e.target.value);
   };
 
   return (
@@ -277,7 +263,7 @@ function CropSelector() {
 
         <div>
           <label className="mb-2 block text-sm font-medium text-gray-700">
-            {t("crop_selector.taluka", { defaultValue: "Taluka" })}
+            {t("crop_selector.taluka")}
           </label>
           <select
             value={selectedTaluka}
@@ -287,12 +273,8 @@ function CropSelector() {
           >
             <option value="">
               {loadingTalukas
-                ? t("crop_selector.loading_talukas", {
-                    defaultValue: "Loading talukas...",
-                  })
-                : t("crop_selector.taluka_placeholder", {
-                    defaultValue: "Select taluka",
-                  })}
+                ? t("crop_selector.loading_talukas")
+                : t("crop_selector.taluka_placeholder")}
             </option>
             {talukas.map((taluka) => (
               <option key={taluka._id} value={taluka.name}>
@@ -304,7 +286,7 @@ function CropSelector() {
 
         <div>
           <label className="mb-2 block text-sm font-medium text-gray-700">
-            {t("crop_selector.market", { defaultValue: "Market" })}
+            {t("crop_selector.market")}
           </label>
           <select
             value={selectedMarket}
@@ -314,12 +296,8 @@ function CropSelector() {
           >
             <option value="">
               {loadingMarkets
-                ? t("crop_selector.loading_markets", {
-                    defaultValue: "Loading markets...",
-                  })
-                : t("crop_selector.market_placeholder", {
-                    defaultValue: "Select market",
-                  })}
+                ? t("crop_selector.loading_markets")
+                : t("crop_selector.market_placeholder")}
             </option>
             {markets.map((market) => (
               <option key={market._id} value={market.name}>

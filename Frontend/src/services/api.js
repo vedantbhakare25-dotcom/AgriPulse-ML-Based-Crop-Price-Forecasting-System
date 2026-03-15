@@ -35,11 +35,17 @@ export async function fetchCommodities(marketName) {
   return res.json();
 }
 
-export async function fetchPrices(marketName, commodityName) {
-  const res = await fetch(
-    `${API_BASE_URL}/prices?marketName=${encodeURIComponent(
-      marketName
-    )}&commodityName=${encodeURIComponent(commodityName)}`
-  );
+export async function fetchPrices({
+  marketName,
+  districtName,
+  commodityName,
+}) {
+  const params = new URLSearchParams();
+
+  if (marketName) params.append("marketName", marketName);
+  if (districtName) params.append("districtName", districtName);
+  if (commodityName) params.append("commodityName", commodityName);
+
+  const res = await fetch(`${API_BASE_URL}/prices?${params.toString()}`);
   return res.json();
 }

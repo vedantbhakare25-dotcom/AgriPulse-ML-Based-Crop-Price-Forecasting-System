@@ -22,14 +22,20 @@ ChartJS.register(
   Legend
 );
 
-function PriceChart() {
+function PriceChart({ dataPoints = [] }) {
   const { t, i18n } = useTranslation();
 
-  const labels = t("price_chart.day_labels", { returnObjects: true });
+  const hasData = Array.isArray(dataPoints) && dataPoints.length > 0;
 
-  const values = [1980, 2020, 2050, 2010, 2080, 2120, 2160];
+  const labels = hasData
+    ? dataPoints.map((item) => item.priceDate)
+    : t("price_chart.day_labels", { returnObjects: true });
 
-  const data = {
+  const values = hasData
+    ? dataPoints.map((item) => item.modalPrice)
+    : [0, 0, 0, 0, 0, 0, 0];
+
+  const chartData = {
     labels,
     datasets: [
       {
@@ -63,6 +69,7 @@ function PriceChart() {
     },
     scales: {
       y: {
+        beginAtZero: true,
         ticks: {
           callback: function (value) {
             return `₹${formatNumber(value, i18n.language)}`;
@@ -74,7 +81,7 @@ function PriceChart() {
 
   return (
     <div className="h-80 w-full">
-      <Line data={data} options={options} />
+      <Line data={chartData} options={options} />
     </div>
   );
 }

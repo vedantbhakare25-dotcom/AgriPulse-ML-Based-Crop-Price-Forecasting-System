@@ -33,13 +33,19 @@ function MandiTable({ data = [], loading = false }) {
         <tbody className="divide-y divide-gray-100 bg-white">
           {loading ? (
             <tr>
-              <td colSpan={5} className="px-6 py-8 text-center text-sm text-gray-500">
+              <td
+                colSpan={5}
+                className="px-6 py-8 text-center text-sm text-gray-500"
+              >
                 {t("mandi_table.loading")}
               </td>
             </tr>
           ) : data.length === 0 ? (
             <tr>
-              <td colSpan={5} className="px-6 py-8 text-center text-sm text-gray-500">
+              <td
+                colSpan={5}
+                className="px-6 py-8 text-center text-sm text-gray-500"
+              >
                 {t("mandi_table.empty")}
               </td>
             </tr>
@@ -48,7 +54,10 @@ function MandiTable({ data = [], loading = false }) {
               const isBestPrice = row.price === bestPrice;
 
               return (
-                <tr key={row.mandi} className="transition hover:bg-gray-50">
+                <tr
+                  key={`${row.mandi}-${index}`}
+                  className="transition hover:bg-gray-50"
+                >
                   <td className="px-6 py-4 text-sm font-medium text-gray-500">
                     {formatNumber(index + 1, i18n.language)}
                   </td>
