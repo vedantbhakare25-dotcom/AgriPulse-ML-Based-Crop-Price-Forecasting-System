@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,6 +10,7 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import { formatNumber } from "../../utils/formatNumber";
 
 ChartJS.register(
   CategoryScale,
@@ -21,21 +23,24 @@ ChartJS.register(
 );
 
 function PriceChart() {
+  const { t, i18n } = useTranslation();
+
+  const labels = t("price_chart.day_labels", { returnObjects: true });
+
+  const values = [1980, 2020, 2050, 2010, 2080, 2120, 2160];
+
   const data = {
-    labels: ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5", "Day 6", "Day 7"],
+    labels,
     datasets: [
       {
-        label: "Predicted Price",
-        data: [1980, 2020, 2050, 2010, 2080, 2120, 2160],
+        label: t("price_chart.predicted_price"),
+        data: values,
         borderColor: "#2F855A",
-        backgroundColor: "rgba(47, 133, 90, 0.12)",
+        backgroundColor: "rgba(47,133,90,0.12)",
         fill: true,
         tension: 0.4,
         pointRadius: 4,
         pointHoverRadius: 6,
-        pointBackgroundColor: "#2F855A",
-        pointBorderColor: "#ffffff",
-        pointBorderWidth: 2,
       },
     ],
   };
@@ -46,54 +51,21 @@ function PriceChart() {
     plugins: {
       legend: {
         display: true,
-        position: "top",
-        labels: {
-          color: "#374151",
-          boxWidth: 12,
-          boxHeight: 12,
-          usePointStyle: true,
-          pointStyle: "circle",
-          padding: 20,
-        },
       },
       tooltip: {
-        backgroundColor: "#111827",
-        titleColor: "#ffffff",
-        bodyColor: "#ffffff",
-        padding: 12,
-        displayColors: false,
         callbacks: {
           label: function (context) {
-            return ` Price: ₹${context.parsed.y}`;
+            const value = formatNumber(context.parsed.y, i18n.language);
+            return `${t("price_chart.price_label")}: ₹${value}`;
           },
         },
       },
     },
     scales: {
-      x: {
-        grid: {
-          display: false,
-          drawBorder: false,
-        },
-        ticks: {
-          color: "#6B7280",
-          font: {
-            size: 12,
-          },
-        },
-      },
       y: {
-        grid: {
-          color: "#E5E7EB",
-          drawBorder: false,
-        },
         ticks: {
-          color: "#6B7280",
-          font: {
-            size: 12,
-          },
           callback: function (value) {
-            return `₹${value}`;
+            return `₹${formatNumber(value, i18n.language)}`;
           },
         },
       },

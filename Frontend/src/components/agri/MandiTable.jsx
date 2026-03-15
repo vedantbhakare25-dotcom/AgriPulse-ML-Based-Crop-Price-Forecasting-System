@@ -1,7 +1,8 @@
 import { useTranslation } from "react-i18next";
+import { formatNumber, formatCurrency } from "../../utils/formatNumber";
 
 function MandiTable({ data = [], loading = false }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const bestPrice =
     data.length > 0 ? Math.max(...data.map((row) => row.price)) : null;
@@ -47,12 +48,9 @@ function MandiTable({ data = [], loading = false }) {
               const isBestPrice = row.price === bestPrice;
 
               return (
-                <tr
-                  key={row.mandi}
-                  className="transition hover:bg-gray-50"
-                >
+                <tr key={row.mandi} className="transition hover:bg-gray-50">
                   <td className="px-6 py-4 text-sm font-medium text-gray-500">
-                    {index + 1}
+                    {formatNumber(index + 1, i18n.language)}
                   </td>
 
                   <td className="px-6 py-4 whitespace-nowrap">
@@ -64,9 +62,10 @@ function MandiTable({ data = [], loading = false }) {
                         <p className="text-sm font-semibold text-gray-900">
                           {row.mandi}
                         </p>
+
                         {isBestPrice && (
                           <span className="inline-block mt-1 rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700">
-                            Best Price
+                            {t("mandi_table.best_price")}
                           </span>
                         )}
                       </div>
@@ -79,16 +78,16 @@ function MandiTable({ data = [], loading = false }) {
                         isBestPrice ? "text-green-700" : "text-gray-900"
                       }`}
                     >
-                      ₹{row.price}
+                      {formatCurrency(row.price, i18n.language)}
                     </span>
                   </td>
 
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-700">
-                    {row.arrival}
+                    {formatNumber(row.arrival, i18n.language)}
                   </td>
 
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-700">
-                    {row.distance} km
+                    {formatNumber(row.distance, i18n.language)} {t("common.km")}
                   </td>
                 </tr>
               );

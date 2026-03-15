@@ -5,6 +5,13 @@
   "select_district": "Select District",
   "compare_markets": "Compare Markets",
   "forecast": "Price Forecast",
+  "common": {
+    "language": "Language",
+    "km": "km"
+  },
+  "navbar": {
+    "tagline": "Agri Market Intelligence"
+  },
   "nav": {
     "home": "Home",
     "markets": "Markets",
@@ -13,9 +20,13 @@
   },
   "crop_selector": {
     "title": "Select Crop",
+    "description": "Select your state, district, and crop to analyze market trends.",
     "state": "State",
     "district": "District",
     "crop": "Crop",
+    "state_placeholder": "Select state",
+    "district_placeholder": "Select district",
+    "crop_placeholder": "Select crop",
     "loading_states": "Loading states...",
     "loading_districts": "Loading districts...",
     "loading_crops": "Loading crops..."
@@ -26,6 +37,70 @@
     "arrival": "Arrival (tons)",
     "distance": "Distance (km)",
     "loading": "Loading market data...",
-    "empty": "No market data available"
+    "empty": "No market data available",
+    "best_price": "Best Price"
+  },
+  "price_chart": {
+    "predicted_price": "Predicted Price",
+    "price_label": "Price",
+    "day_labels": ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5", "Day 6", "Day 7"]
+  },
+  "insight_panel": {
+    "title": "AI Market Insight",
+    "description": "Prices are expected to rise over the next few days due to reduced arrivals in nearby mandis and steady market demand. Farmers may benefit from holding their stock for a short period before selling.",
+    "bullets": [
+      "Arrivals dropped by ~18% in nearby markets",
+      "Demand remains stable in wholesale markets",
+      "Forecast models predict upward price movement"
+    ]
+  },
+  "home": {
+    "badge": "Smart Agri-Fintech Intelligence",
+    "subtitle": "Compare mandi prices, track crop trends, and view AI-powered forecasts through a clean and farmer-friendly dashboard.",
+    "view_forecast": "View Forecast",
+    "cards": {
+      "markets_tracked": "Markets Tracked",
+      "markets_tracked_value": "100+",
+      "crop_insights": "Crop Insights",
+      "crop_insights_value": "AI-Based",
+      "forecast_window": "Forecast Window",
+      "forecast_window_value": "7 Days"
+    },
+    "preview": {
+      "best_market_price": "Best Market Price",
+      "national_avg_price": "National Avg Price",
+      "market_trend": "Market Trend",
+      "upward": "Upward",
+      "ai_insight": "AI Insight",
+      "ai_insight_text": "Prices are expected to improve due to lower arrivals and stable demand across key mandis."
+    }
+  },
+  "market_dashboard": {
+    "summary": "Market Summary",
+    "nearby_prices": "Nearby Market Prices",
+    "price_trend": "Price Trend",
+    "ai_insights": "AI Insights",
+    "cards": {
+      "best_market_price": "Best Market Price",
+      "average_price": "Average Price",
+      "seven_day_forecast": "7 Day Forecast"
+    }
+  },
+  "forecast_dashboard": {
+    "title": "Price Forecast",
+    "subtitle": "Predict future mandi prices for the selected crop",
+    "summary": "Forecast Summary",
+    "trend": "7-Day Forecast Trend",
+    "ai_insight": "AI Forecast Insight",
+    "recommendation": "Recommendation",
+    "suggested_action": "Suggested Action",
+    "suggested_action_text": "Current trend is upward. Waiting 2–3 days may improve the selling price.",
+    "cards": {
+      "tomorrow_price": "Tomorrow Price",
+      "seven_day_average": "7 Day Average",
+      "trend": "Trend",
+      "trend_upward": "Upward",
+      "confidence": "Confidence"
+    }
   }
 }
