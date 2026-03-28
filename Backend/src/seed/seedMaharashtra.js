@@ -42,6 +42,8 @@ const seedMaharashtraData = async () => {
       { name: "Yeola", districtName: "Nashik", stateCode: "MH" },
       { name: "Haveli", districtName: "Pune", stateCode: "MH" },
       { name: "Rahata", districtName: "Ahmednagar", stateCode: "MH" },
+      { name: "Kopargaon", districtName: "Ahmednagar", stateCode: "MH" },
+      { name: "Sangamner", districtName: "Ahmednagar", stateCode: "MH" },
     ]);
 
     await Market.insertMany([
@@ -73,6 +75,27 @@ const seedMaharashtraData = async () => {
         stateCode: "MH",
         marketType: "APMC",
       },
+      {
+        name: "Shirdi APMC",
+        districtName: "Ahmednagar",
+        talukaName: "Rahata",
+        stateCode: "MH",
+        marketType: "APMC",
+      },
+      {
+        name: "Kopargaon APMC",
+        districtName: "Ahmednagar",
+        talukaName: "Kopargaon",
+        stateCode: "MH",
+        marketType: "APMC",
+      },
+      {
+        name: "Sangamner APMC",
+        districtName: "Ahmednagar",
+        talukaName: "Sangamner",
+        stateCode: "MH",
+        marketType: "APMC",
+      },
     ]);
 
     await Commodity.insertMany([
@@ -98,6 +121,10 @@ const seedMaharashtraData = async () => {
 
       { marketName: "Rahata APMC", commodityName: "Onion" },
       { marketName: "Rahata APMC", commodityName: "Maize" },
+
+      { marketName: "Shirdi APMC", commodityName: "Onion" },
+      { marketName: "Kopargaon APMC", commodityName: "Onion" },
+      { marketName: "Sangamner APMC", commodityName: "Onion" },
     ]);
 
     await MarketPriceDaily.insertMany([
@@ -185,20 +212,7 @@ const seedMaharashtraData = async () => {
         maxPrice: 1980,
         priceDate: "2026-03-15",
       },
-      {
-        stateCode: "MH",
-        districtName: "Ahmednagar",
-        talukaName: "Rahata",
-        marketName: "Rahata APMC",
-        commodityName: "Onion",
-        variety: "Red",
-        unit: "Quintal",
-        arrival: 275,
-        minPrice: 1800,
-        modalPrice: 1980,
-        maxPrice: 2080,
-        priceDate: "2026-03-15",
-      },
+
       {
         stateCode: "MH",
         districtName: "Ahmednagar",
@@ -281,6 +295,48 @@ const seedMaharashtraData = async () => {
         minPrice: 1800,
         modalPrice: 1980,
         maxPrice: 2080,
+        priceDate: "2026-03-15",
+      },
+      {
+        stateCode: "MH",
+        districtName: "Ahmednagar",
+        talukaName: "Rahata",
+        marketName: "Shirdi APMC",
+        commodityName: "Onion",
+        variety: "Red",
+        unit: "Quintal",
+        arrival: 310,
+        minPrice: 1900,
+        modalPrice: 2050,
+        maxPrice: 2120,
+        priceDate: "2026-03-15",
+      },
+      {
+        stateCode: "MH",
+        districtName: "Ahmednagar",
+        talukaName: "Kopargaon",
+        marketName: "Kopargaon APMC",
+        commodityName: "Onion",
+        variety: "Red",
+        unit: "Quintal",
+        arrival: 295,
+        minPrice: 1880,
+        modalPrice: 2010,
+        maxPrice: 2090,
+        priceDate: "2026-03-15",
+      },
+      {
+        stateCode: "MH",
+        districtName: "Ahmednagar",
+        talukaName: "Sangamner",
+        marketName: "Sangamner APMC",
+        commodityName: "Onion",
+        variety: "Red",
+        unit: "Quintal",
+        arrival: 260,
+        minPrice: 1850,
+        modalPrice: 1995,
+        maxPrice: 2060,
         priceDate: "2026-03-15",
       },
     ]);

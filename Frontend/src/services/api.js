@@ -49,3 +49,22 @@ export async function fetchPrices({
   const res = await fetch(`${API_BASE_URL}/prices?${params.toString()}`);
   return res.json();
 }
+
+export async function fetchRecommendation({
+  districtName,
+  commodityName,
+  quantity,
+  fuelCostPerKm,
+  marketFeePercent,
+}) {
+  const params = new URLSearchParams();
+
+  if (districtName) params.append("districtName", districtName);
+  if (commodityName) params.append("commodityName", commodityName);
+  if (quantity) params.append("quantity", quantity);
+  if (fuelCostPerKm) params.append("fuelCostPerKm", fuelCostPerKm);
+  if (marketFeePercent) params.append("marketFeePercent", marketFeePercent);
+
+  const res = await fetch(`${API_BASE_URL}/recommendation?${params.toString()}`);
+  return res.json();
+}

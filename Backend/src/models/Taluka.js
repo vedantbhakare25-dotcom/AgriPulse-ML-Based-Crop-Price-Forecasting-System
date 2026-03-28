@@ -27,6 +27,8 @@ talukaSchema.index(
   { unique: true }
 );
 
+talukaSchema.index({ districtName: 1, stateCode: 1 });
+
 const Taluka = mongoose.model("Taluka", talukaSchema);
 
 export default Taluka;

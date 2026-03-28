@@ -1,0 +1,146 @@
+[
+  {
+    "district": "Ahmednagar",
+    "talukas": ["Nagar", "Rahata", "Kopargaon", "Sangamner", "Shrirampur", "Nevasa", "Pathardi", "Shevgaon", "Karjat", "Shrigonda", "Parner", "Akole", "Jamkhed", "Rahuri"]
+  },
+  {
+    "district": "Akola",
+    "talukas": ["Akola", "Akot", "Telhara", "Balapur", "Patur", "Murtajapur", "Barshitakli"]
+  },
+  {
+    "district": "Amravati",
+    "talukas": ["Amravati", "Bhatkuli", "Nandgaon Khandeshwar", "Dhamangaon Railway", "Chandur Railway", "Tiosa", "Morshi", "Warud", "Achalpur", "Chandur Bazar", "Daryapur", "Anjangaon Surji", "Dharni", "Chikhaldara"]
+  },
+  {
+    "district": "Aurangabad",
+    "talukas": ["Aurangabad", "Kannad", "Soegaon", "Sillod", "Phulambri", "Khuldabad", "Vaijapur", "Gangapur", "Paithan"]
+  },
+  {
+    "district": "Beed",
+    "talukas": ["Beed", "Ashti", "Patoda", "Shirur Kasar", "Georai", "Majalgaon", "Wadwani", "Kaij", "Dharur", "Parli", "Ambejogai"]
+  },
+  {
+    "district": "Bhandara",
+    "talukas": ["Bhandara", "Tumsar", "Mohadi", "Sakoli", "Lakhani", "Pauni", "Lakhandur"]
+  },
+  {
+    "district": "Buldhana",
+    "talukas": ["Buldhana", "Chikhli", "Deulgaon Raja", "Khamgaon", "Shegaon", "Malkapur", "Motala", "Nandura", "Jalgaon Jamod", "Sangrampur", "Sindkhed Raja", "Lonar", "Mehkar"]
+  },
+  {
+    "district": "Chandrapur",
+    "talukas": ["Chandrapur", "Bhadravati", "Warora", "Chimur", "Nagbhir", "Bramhapuri", "Sindewahi", "Mul", "Gondpipri", "Pombhurna", "Saoli", "Rajura", "Korpana", "Jivati", "Ballarpur"]
+  },
+  {
+    "district": "Dhule",
+    "talukas": ["Dhule", "Sakri", "Sindkheda", "Shirpur"]
+  },
+  {
+    "district": "Gadchiroli",
+    "talukas": ["Gadchiroli", "Kurkheda", "Desaiganj", "Armori", "Dhanora", "Chamorshi", "Aheri", "Sironcha", "Ettapalli", "Bhamragad", "Korchi", "Mulchera"]
+  },
+  {
+    "district": "Gondia",
+    "talukas": ["Gondia", "Tirora", "Goregaon", "Amgaon", "Salekasa", "Sadak Arjuni", "Arjuni Morgaon", "Deori"]
+  },
+  {
+    "district": "Hingoli",
+    "talukas": ["Hingoli", "Kalamnuri", "Sengoaon", "Aundha Nagnath", "Basmath"]
+  },
+  {
+    "district": "Jalgaon",
+    "talukas": ["Jalgaon", "Jamner", "Erandol", "Dharangaon", "Bhusawal", "Raver", "Muktainagar", "Bodwad", "Yawal", "Amalner", "Parola", "Chopda", "Pachora", "Bhadgaon", "Chalisgaon"]
+  },
+  {
+    "district": "Jalna",
+    "talukas": ["Jalna", "Ambad", "Bhokardan", "Jafrabad", "Badnapur", "Ghansawangi", "Partur", "Mantha"]
+  },
+  {
+    "district": "Kolhapur",
+    "talukas": ["Karvir", "Panhala", "Shahuwadi", "Kagal", "Hatkanangale", "Shirol", "Radhanagari", "Gaganbawada", "Bhudargad", "Gadhinglaj", "Chandgad", "Ajra"]
+  },
+  {
+    "district": "Latur",
+    "talukas": ["Latur", "Ausa", "Nilanga", "Shirur Anantpal", "Deoni", "Jalkot", "Udgir", "Ahmadpur", "Chakur", "Renapur"]
+  },
+  {
+    "district": "Mumbai City",
+    "talukas": ["Mumbai City"]
+  },
+  {
+    "district": "Mumbai Suburban",
+    "talukas": ["Andheri", "Borivali", "Kurla"]
+  },
+  {
+    "district": "Nagpur",
+    "talukas": ["Nagpur (Urban)", "Nagpur (Rural)", "Kamptee", "Hingna", "Katol", "Narkhed", "Savner", "Kalameshwar", "Ramtek", "Parseoni", "Mouda", "Umred", "Bhiwapur", "Kuhi"]
+  },
+  {
+    "district": "Nanded",
+    "talukas": ["Nanded", "Ardhapur", "Mudkhed", "Bhokar", "Umri", "Dharmabad", "Biloli", "Naigaon", "Mukhed", "Kandhar", "Loha", "Hadgaon", "Himayatnagar", "Kinwat", "Mahur"]
+  },
+  {
+    "district": "Nandurbar",
+    "talukas": ["Nandurbar", "Navapur", "Shahada", "Talode", "Akkalkuwa", "Akrani"]
+  },
+  {
+    "district": "Nashik",
+    "talukas": ["Nashik", "Igatpuri", "Dindori", "Peth", "Trimbakeshwar", "Kalwan", "Deola", "Surgana", "Baglan", "Malegaon", "Nandgaon", "Chandwad", "Niphad", "Sinnar", "Yeola"]
+  },
+  {
+    "district": "Osmanabad",
+    "talukas": ["Osmanabad", "Tuljapur", "Bhum", "Paranda", "Washi", "Kalamb", "Lohara", "Umarga"]
+  },
+  {
+    "district": "Palghar",
+    "talukas": ["Palghar", "Vasai", "Dahanu", "Talasari", "Jawhar", "Mokhada", "Vada", "Vikramgad"]
+  },
+  {
+    "district": "Parbhani",
+    "talukas": ["Parbhani", "Sonpeth", "Gangakhed", "Palam", "Purna", "Sailu", "Jintur", "Manwath", "Pathri"]
+  },
+  {
+    "district": "Pune",
+    "talukas": ["Haveli", "Pune City", "Khed", "Junnar", "Ambegaon", "Shirur", "Baramati", "Indapur", "Daund", "Bhor", "Velhe", "Purandar", "Mulshi", "Maval"]
+  },
+  {
+    "district": "Raigad",
+    "talukas": ["Alibag", "Pen", "Murud", "Panvel", "Uran", "Karjat", "Khalapur", "Mangaon", "Tala", "Roha", "Sudhagad", "Mahad", "Poladpur", "Shrivardhan", "Mhasla"]
+  },
+  {
+    "district": "Ratnagiri",
+    "talukas": ["Ratnagiri", "Sangameshwar", "Lanja", "Rajapur", "Chiplun", "Guhagar", "Dapoli", "Mandangad", "Khed"]
+  },
+  {
+    "district": "Sangli",
+    "talukas": ["Miraj", "Kavathe-Mahankal", "Tasgaon", "Jat", "Shirala", "Walwa", "Palus", "Khanapur", "Atpadi", "Kadegaon"]
+  },
+  {
+    "district": "Satara",
+    "talukas": ["Satara", "Karad", "Wai", "Mahabaleshwar", "Phaltan", "Man", "Khatav", "Koregaon", "Patan", "Jaoli", "Khandala"]
+  },
+  {
+    "district": "Sindhudurg",
+    "talukas": ["Kankavli", "Vaibhavwadi", "Devgad", "Malwan", "Sawantwadi", "Kudal", "Vengurla", "Dodamarg"]
+  },
+  {
+    "district": "Solapur",
+    "talukas": ["Solapur North", "Barshi", "Akkalkot", "Solapur South", "Mohol", "Mangalvedhe", "Pandharpur", "Sangola", "Malshiras", "Karmala", "Madha"]
+  },
+  {
+    "district": "Thane",
+    "talukas": ["Thane", "Kalyan", "Murbad", "Bhiwandi", "Shahapur", "Ulhasnagar", "Ambarnath"]
+  },
+  {
+    "district": "Wardha",
+    "talukas": ["Wardha", "Deoli", "Seloo", "Arvi", "Ashti", "Karanja", "Hinganghat", "Samudrapur"]
+  },
+  {
+    "district": "Washim",
+    "talukas": ["Washim", "Malegaon", "Risod", "Mangrulpir", "Karanja", "Manora"]
+  },
+  {
+    "district": "Yavatmal",
+    "talukas": ["Yavatmal", "Arni", "Babulgaon", "Kalamb", "Darwha", "Digras", "Ner", "Pusad", "Umarkhed", "Mahagaon", "Kelapur", "Ralegaon", "Ghatanji", "Wani", "Maregaon", "Zari Jamani"]
+  }
+]
